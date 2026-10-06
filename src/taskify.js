@@ -1,86 +1,96 @@
-
-// Object Utama
 const Taskify = {
     tasks: [],
-    displayTasks: function () {
-        // menampilkan task ke dalam console
-        console.table(this.tasks)
+    nextId: 1,
 
-        // reset task list
-        taskList.innerHTML = ''
+    displayTasks() {
+        taskList.innerHTML = '';
 
-        // for each
-        this.tasks.forEach(task => {
-            // bikin element task list
-            const list = `
-                <li class="flex items-center justify-between border-b border-gray-300 py-2">
-                    <div>
-                        <input type="checkbox" class="mr-2" />
-                        <span>${ task.title }</span>
-                    </div>
-                    <button class="bg-red-500 text-white rounded-md p-1">Delete</button>
-                </li>
-            `
+        this.tasks.forEach((task) => {
+            const item = document.createElement('li');
+            item.className =
+                'flex items-center justify-between gap-4 border-2 border-black bg-white p-4';
 
-            // inject ke dalam task list
-            taskList.insertAdjacentHTML('beforeend', list)
-        })
-    },
-    addTask: function (title) {
-        // menambahkan task ke dalam array tasks
-        const task = {
-            id: this.tasks.length + 1,
-            title: title,
-            isDone: false
+            const label = document.createElement('label');
+            label.className = 'flex min-w-0 items-center gap-3 font-bold cursor-pointer';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = task.isDone;
+            checkbox.className =
+                'size-5 shrink-0 accent-black cursor-pointer';
+            checkbox.addEventListener('change', () => this.toggleTask(task.id));
+
+            const title = document.createElement('span');
+            title.textContent = task.title;
+            title.className = task.isDone
+                ? 'break-words text-neutral-500 line-through'
+                : 'break-words';
+
+            label.append(checkbox, title);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.className =
+                'shrink-0 border-2 border-black bg-white px-3 py-2 text-xs font-black uppercase hover:bg-[#ff6b6b] focus:outline-none focus:ring-2 focus:ring-black';
+            deleteButton.addEventListener('click', () => this.removeTask(task.id));
+
+            item.append(label, deleteButton);
+            taskList.append(item);
+        });
+
+        const taskCount = document.getElementById('task-count');
+        if (taskCount) {
+            const remaining = this.tasks.filter((task) => !task.isDone).length;
+            taskCount.textContent = `${remaining} ${remaining === 1 ? 'task' : 'tasks'} left`;
         }
-
-        this.tasks.push(task)
     },
-    toggleTask: function (id) {
-        // mencari task berdasarkan id
-        const task = this.tasks.find(task => task.id === id)
 
-        if (!task) return alert(`Task dengan id ${id} tidak ditemukan!`)
+    addTask(title) {
+        this.tasks.push({
+            id: this.nextId++,
+            title,
+            isDone: false,
+        });
 
-        // mengubah status isDone dari task
-        task.isDone = !task.isDone
+        this.displayTasks();
     },
-    removeTask: function (id) {
-        // mencari index task berdasarkan id
-        const index = this.tasks.findIndex(task => task.id === id)
 
-        if (index === -1) return alert(`Task dengan id ${id} tidak ditemukan!`)
+    toggleTask(id) {
+        const task = this.tasks.find((task) => task.id === id);
+        if (!task) return;
 
-        // menghapus task dari array tasks
-        this.tasks.splice(index, 1)
+        task.isDone = !task.isDone;
+        this.displayTasks();
+    },
+
+    removeTask(id) {
+        const task = this.tasks.find((task) => task.id === id);
+        if (!task) return;
+
+        if (!confirm(`Delete "${task.title}"?`)) return;
+
+        this.tasks = this.tasks.filter((task) => task.id !== id);
+        this.displayTasks();
+    },
+};
+
+window.Taskify = Taskify;
+
+const form = document.getElementById('form');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const title = taskInput.value.trim();
+    if (!title) {
+        taskInput.focus();
+        return;
     }
-}
 
-window.Taskify = Taskify
-
-// Elements
-const form = document.getElementById('form')
-const taskInput = document.getElementById('task-input')
-const taskList = document.getElementById('task-list')
-
-// Event Listeners
-form.addEventListener('submit', function (e) {
-
-    e.preventDefault()
-
-    // task title
-    const title = taskInput.value.trim()
-
-    if (!title) return alert('Task title tidak boleh kosong!')
-
-    console.log(taskInput.value)
-
-    // panggil Taskify.addTask untuk menambahkan task baru
-    Taskify.addTask(title)
-
-    // Panggil Taskify.displayTasks untuk menampilkan task baru
-    Taskify.displayTasks()
-
-    // reset input field
-    taskInput.value = ''
-})
+    Taskify.addTask(title);
+    taskInput.value = '';
+    taskInput.focus();
+});

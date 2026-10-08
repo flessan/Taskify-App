@@ -635,7 +635,7 @@ body {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 30;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -696,7 +696,11 @@ body {
 .icon-btn.active { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
 
 /* Palette menu */
-.menu-scrim { position: fixed; inset: 0; z-index: 40; }
+.menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
 
 .palette-menu {
   position: absolute;

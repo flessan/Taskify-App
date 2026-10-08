@@ -227,7 +227,8 @@ function toggleMode() {
 
 function chooseSeed(hex) {
   seed.value = hex
-  paletteOpen.value = false
+  // Keep the palette open so users can compare and switch colors
+  // without having to reopen the menu after every selection.
 }
 
 watch(mode, (value) => {
@@ -702,8 +703,8 @@ body {
   right: 0;
   top: calc(100% + 10px);
   z-index: 50;
-  min-width: 240px;
-  padding: 16px;
+  width: min(292px, calc(100vw - 32px));
+  padding: 18px;
   border-radius: 20px;
   background: var(--md-surface-container);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
@@ -715,21 +716,31 @@ body {
   font-weight: 600;
   letter-spacing: 0.1px;
 }
-.swatches { display: flex; gap: 10px; flex-wrap: wrap; }
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(52px, 1fr));
+  gap: 12px;
+}
 .swatch {
-  width: 38px;
-  height: 38px;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  justify-self: center;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   display: grid;
   place-items: center;
   cursor: pointer;
   color: #fff;
+  touch-action: manipulation;
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
   transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
 }
-.swatch .msr { font-size: 18px; }
-.swatch:hover { transform: scale(1.12); }
+.swatch .msr { font-size: 21px; }
+.swatch:hover { transform: scale(1.08); }
+.swatch:active { transform: scale(0.96); }
 .swatch.active {
   box-shadow: 0 0 0 2px var(--md-surface-container), 0 0 0 4px var(--md-primary);
   transform: scale(1.05);
@@ -1211,7 +1222,7 @@ body {
   .btn-filled { width: 100%; height: 54px; }
   .hero { border-radius: 26px; }
   .hero-mark { font-size: 140px; right: -30px; }
-  .palette-menu { min-width: 210px; }
+  .palette-menu { width: min(292px, calc(100vw - 24px)); }
 }
 
 @media (min-width: 1200px) {

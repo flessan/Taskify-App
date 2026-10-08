@@ -1,8 +1,9 @@
-<img width="1918" height="1198" alt="gambar" src="https://github.com/user-attachments/assets/f0e10ade-e00e-4e84-8c2d-53b12679283b" />
+<img width="1891" height="1098" alt="image" src="https://github.com/user-attachments/assets/6cc77d81-9b4e-4a47-8736-3ced53d79e1d" />
 
-# Taskify (w/ Brutalism UI)
 
-A simple task-list project built while exploring brutalist UI design. This branch is the Vue version of the app.
+# Taskify (w/ Material You 3 Expressive UI)
+
+A simple task-list project built while exploring m3e UI design. This branch is the Vue version of the app.
 
 ## Features
 

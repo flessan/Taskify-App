@@ -1,46 +1,13 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <title>Taskify</title>
-</head>
-
-<body class="min-h-screen bg-[#f4f0e8] text-black">
-  <main class="mx-auto max-w-2xl px-5 py-12 sm:py-20">
-    <header class="mb-10 border-b-4 border-black pb-5">
-      <p class="mb-3 text-sm font-bold uppercase tracking-widest">Taskify / Daily planner</p>
-      <h1 class="text-5xl font-black uppercase leading-none tracking-tight sm:text-7xl">
-        Get it<br />done.
-      </h1>
-    </header>
-
-    <form id="form" action="" class="mb-10">
-      <label for="task-input" class="mb-2 block text-sm font-bold uppercase">
-        New task
-      </label>
-      <div class="flex flex-col gap-3 sm:flex-row">
-        <input id="task-input" type="text" placeholder="What needs doing?"
-          class="min-w-0 flex-1 border-2 border-black bg-white px-4 py-3 text-base font-medium outline-none placeholder:text-neutral-500 focus:bg-[#fff36b]" />
-        <button type="submit"
-          class="border-2 border-black bg-[#fff36b] px-6 py-3 font-black uppercase transition hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-          + Add task
-        </button>
-      </div>
-    </form>
-
-    <section>
-      <div class="mb-4 flex items-end justify-between border-b-2 border-black pb-2">
-        <h2 class="text-xl font-black uppercase">Your list</h2>
-        <span class="text-xs font-bold uppercase tracking-wider">Do the next thing</span>
-      </div>
-      <ul id="task-list" class="space-y-3"></ul>
-    </section>
-  </main>
-
-  <script type="module" src="/src/taskify.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Taskify — a simple brutalist task list." />
+    <title>Taskify</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
